@@ -8,7 +8,7 @@ export function SettingsStackScreen() {
   return (
     <SettingsStack.Navigator
       initialRouteName="Settings"
-      screenOptions={{headerShown: false}}>
+      screenOptions={{headerShown: true}}>
       <SettingsStack.Screen name="Settings" component={SettingsScreen} />
       <SettingsStack.Screen name="Details" component={DetailsScreen} />
     </SettingsStack.Navigator>

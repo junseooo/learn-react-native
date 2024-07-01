@@ -2,8 +2,8 @@ import 'react-native-gesture-handler';
 import * as React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {ContactsScreen, HomeScreen, MoviesScreen} from '../screens';
-import {SettingsStackScreen} from '../stacks';
+import {ContactsScreen, HomeScreen} from '../screens';
+import {MoviesStackScreen, SettingsStackScreen} from '../stacks';
 
 const Tab = createBottomTabNavigator();
 
@@ -31,8 +31,8 @@ export function BottomTab() {
         }}
       />
       <Tab.Screen
-        name="Grid"
-        component={MoviesScreen}
+        name="MoviesStack"
+        component={MoviesStackScreen}
         options={{
           tabBarLabel: 'Movies',
           tabBarIcon: ({color, size}) => (

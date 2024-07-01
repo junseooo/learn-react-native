@@ -1,2 +1,3 @@
 export * from './common.style';
 export * from './contact.style';
+export * from './movie.style';

@@ -1,19 +1,21 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import * as React from 'react';
-import {ActivityIndicator, FlatList, Text, View} from 'react-native';
 import {useEffect, useState} from 'react';
-import {common} from '../styles';
+import {MovieDetail} from '../components/MovieDetail';
+import {FlatGrid} from 'react-native-super-grid';
+import {movie} from '../styles';
 
-const url = 'https://nomad-movies.nomadcoders.workers.dev/movies';
+export const url = 'https://nomad-movies.nomadcoders.workers.dev/movies';
 
-type Movie = {
+interface IMovieProps {
   id: string;
   title: string;
-  releaseYear: string;
-};
+  poster_path: string;
+}
 
 export function MoviesScreen() {
   const [isLoading, setLoading] = useState(true);
-  const [data, setData] = useState<Movie[]>([]);
+  const [data, setData] = useState<IMovieProps[]>([]);
 
   const fetchData = async () => {
     try {
@@ -30,17 +32,16 @@ export function MoviesScreen() {
   useEffect(() => {
     fetchData();
   }, []);
+
   return (
-    <View style={common.center}>
-      {isLoading ? (
-        <ActivityIndicator />
-      ) : (
-        <FlatList
-          data={data}
-          keyExtractor={({id}) => id}
-          renderItem={({item}) => <Text>{item.title}</Text>}
-        />
+    <FlatGrid
+      itemDimension={130}
+      data={data}
+      style={movie.gridView}
+      spacing={10}
+      renderItem={({item}) => (
+        <MovieDetail title={item.title} poster_path={item.poster_path} />
       )}
-    </View>
+    />
   );
 }
