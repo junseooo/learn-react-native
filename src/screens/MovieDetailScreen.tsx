@@ -1,10 +1,11 @@
 import * as React from 'react';
 import {ActivityIndicator, Image, Text, View} from 'react-native';
-import {RouteProp} from '@react-navigation/native';
+import {RouteProp, useNavigation} from '@react-navigation/native';
 import {common, movieDetail} from '../styles';
 import {RootStackParamList} from '../stacks';
 import {url} from './MoviesScreen';
 import {UseQueryOptions, useQuery} from '@tanstack/react-query';
+import {useLayoutEffect} from 'react';
 
 type MovieDetailScreenParams = RouteProp<RootStackParamList, 'MovieDetail'>;
 
@@ -30,12 +31,22 @@ const fetchMovieDetails = async (id: string) => {
 
 export function MovieDetailScreen({route}: Props) {
   const {id} = route.params;
+  const navigation = useNavigation();
 
   const queryOptions: UseQueryOptions<IMoive, Error> = {
     queryKey: ['movieDetails', id],
     queryFn: () => fetchMovieDetails(id),
   };
+
   const {data, error, isLoading} = useQuery(queryOptions);
+
+  useLayoutEffect(() => {
+    if (data?.title) {
+      navigation.setOptions({
+        title: data.title,
+      });
+    }
+  }, [navigation, data]);
 
   if (isLoading) {
     return (
