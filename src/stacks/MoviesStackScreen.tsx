@@ -1,16 +1,25 @@
 import * as React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {DetailsScreen, MoviesScreen} from '../screens';
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
+import {MovieDetailScreen, MoviesScreen} from '../screens';
 
-const MoviesStack = createStackNavigator();
+export type RootStackParamList = {
+  Movies: undefined;
+  MovieDetail: {id: string};
+};
+
+const MoviesStack = createStackNavigator<RootStackParamList>();
+const queryClient = new QueryClient();
 
 export function MoviesStackScreen() {
   return (
-    <MoviesStack.Navigator
-      initialRouteName="Moives"
-      screenOptions={{headerShown: true}}>
-      <MoviesStack.Screen name="Movies" component={MoviesScreen} />
-      <MoviesStack.Screen name="MovieDetails" component={DetailsScreen} />
-    </MoviesStack.Navigator>
+    <QueryClientProvider client={queryClient}>
+      <MoviesStack.Navigator
+        initialRouteName="Movies"
+        screenOptions={{headerShown: true}}>
+        <MoviesStack.Screen name="Movies" component={MoviesScreen} />
+        <MoviesStack.Screen name="MovieDetail" component={MovieDetailScreen} />
+      </MoviesStack.Navigator>
+    </QueryClientProvider>
   );
 }

@@ -1,9 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import * as React from 'react';
 import {useEffect, useState} from 'react';
-import {MovieDetail} from '../components/MovieDetail';
+import {TouchableOpacity} from 'react-native';
+import {StackNavigationProp} from '@react-navigation/stack';
 import {FlatGrid} from 'react-native-super-grid';
+import {MovieDetail} from '../components';
 import {movie} from '../styles';
+import {RootStackParamList} from '../stacks';
 
 export const url = 'https://nomad-movies.nomadcoders.workers.dev/movies';
 
@@ -13,7 +16,11 @@ interface IMovieProps {
   poster_path: string;
 }
 
-export function MoviesScreen() {
+type MoviesScreenProps = {
+  navigation: StackNavigationProp<RootStackParamList, 'Movies'>;
+};
+
+export function MoviesScreen({navigation}: MoviesScreenProps) {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState<IMovieProps[]>([]);
 
@@ -40,7 +47,15 @@ export function MoviesScreen() {
       style={movie.gridView}
       spacing={10}
       renderItem={({item}) => (
-        <MovieDetail title={item.title} poster_path={item.poster_path} />
+        <TouchableOpacity
+          key={item.id}
+          onPress={() => {
+            navigation.navigate('MovieDetail', {
+              id: item.id,
+            });
+          }}>
+          <MovieDetail title={item.title} poster_path={item.poster_path} />
+        </TouchableOpacity>
       )}
     />
   );
