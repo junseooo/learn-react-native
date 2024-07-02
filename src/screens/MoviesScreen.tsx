@@ -4,7 +4,7 @@ import {useEffect, useState} from 'react';
 import {TouchableOpacity} from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {FlatGrid} from 'react-native-super-grid';
-import {MovieDetail} from '../components';
+import {MovieComponent} from '../components';
 import {movie} from '../styles';
 import {RootStackParamList} from '../stacks';
 
@@ -54,7 +54,7 @@ export function MoviesScreen({navigation}: MoviesScreenProps) {
               id: item.id,
             });
           }}>
-          <MovieDetail title={item.title} poster_path={item.poster_path} />
+          <MovieComponent title={item.title} poster_path={item.poster_path} />
         </TouchableOpacity>
       )}
     />
