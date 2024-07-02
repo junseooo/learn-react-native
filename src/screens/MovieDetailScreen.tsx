@@ -1,7 +1,7 @@
 import * as React from 'react';
-import {ActivityIndicator, Image, StyleSheet, Text, View} from 'react-native';
+import {ActivityIndicator, Image, Text, View} from 'react-native';
 import {RouteProp} from '@react-navigation/native';
-import {common} from '../styles';
+import {common, movieDetail} from '../styles';
 import {RootStackParamList} from '../stacks';
 import {url} from './MoviesScreen';
 import {UseQueryOptions, useQuery} from '@tanstack/react-query';
@@ -54,27 +54,13 @@ export function MovieDetailScreen({route}: Props) {
   }
 
   return (
-    <View style={common.center}>
-      <Text>Moive title: {data?.title}</Text>
-      <Image source={{uri: data?.poster_path}} style={styles.poster} />
-      <Text>Moive poster_path: {data?.poster_path}</Text>
-      <Text>Moive overview: {data?.overview}</Text>
-      <Text>Moive vote_average: {data?.vote_average}</Text>
+    <View style={movieDetail.container}>
+      <Image source={{uri: data?.poster_path}} style={movieDetail.poster} />
+      <View style={movieDetail.description}>
+        <Text style={movieDetail.title}>{data?.title}</Text>
+        <Text style={movieDetail.vote}>⭐️ {data?.vote_average}</Text>
+        <Text style={movieDetail.overview}>{data?.overview}</Text>
+      </View>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  poster: {
-    height: 300,
-    borderRadius: 5,
-  },
-  titleBox: {
-    height: 40,
-  },
-  title: {
-    fontSize: 14,
-    lineHeight: 20,
-    color: '#000',
-  },
-});
